@@ -3,10 +3,16 @@ from django.db.models.signals import post_save
 from django.db import models
 from django.utils.crypto import get_random_string
 from django.dispatch import receiver
+import os
 
 
 def create_id():
     return get_random_string(length=10)
+
+
+def get_user_image_path(instance, filename):
+    extends = filename.split('.')[-1]
+    return os.path.join('user', f"{instance.id}.{extends}")
 
 
 class UserManager(BaseUserManager):
@@ -46,6 +52,7 @@ class User(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     data_joined = models.DateTimeField(auto_now_add=True)
+    img = models.ImageField(blank=True, null=True, upload_to=get_user_image_path)
 
     objects = UserManager()
 
@@ -67,6 +74,7 @@ class Profile(models.Model):
     user_id = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     bio = models.TextField(default='', blank=True, max_length=150)
     birthday = models.DateField(blank=True, null=True)
+    # img = models.ImageField(blank=True, null=True, upload_to=get_image_path)
 
 
 @receiver(post_save, sender=User)
