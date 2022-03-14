@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db.models.signals import post_save
 from django.db import models
 from django.utils.crypto import get_random_string
+from django.dispatch import receiver
 
 
 def create_id():
@@ -63,5 +65,11 @@ class User(AbstractBaseUser):
 
 class Profile(models.Model):
     user_id = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
-    bio = models.TextField(max_length=150)
+    bio = models.TextField(default='', blank=True, max_length=150)
     birthday = models.DateField(blank=True, null=True)
+
+
+@receiver(post_save, sender=User)
+def create_profile(sender, **kwargs):
+    if kwargs['created']:
+        Profile.objects.create(user_id=kwargs['instance'])
