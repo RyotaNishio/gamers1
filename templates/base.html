@@ -8,11 +8,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>gamers</title>
 </head>
-<body>
-    <div class="text-center m-5">
-      <div class="bg-yellow-400 p-5 inline-block rounded">
-        <div class="text-3xl font-bold">DjangoでTailwindCSSを使用する方法</div>
-      </div>
-    </div>
+
+<body class="min-h-screen">
+    <header>
+        {% include 'snippets/header.html' %}
+    </header>
+
+    <main>
+        {% include 'snippets/messages.html' %}
+        {% block main %}
+        {% endblock %}
+    </main>
 </body>
 </html>
+

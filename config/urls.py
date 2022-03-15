@@ -17,9 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.contrib.staticfiles.urls import static
+from base.views import UserView, UserListView, Login, Top, Signup, Logout
 
 urlpatterns = [
+    path('', Top.as_view(), name="top"),
     path('admin/', admin.site.urls),
+    path('login/', Login.as_view(), name="login"),
+    path('user/{:id}', UserView.as_view()),
+    path('users/', UserListView.as_view()),
+    path('signup/', Signup.as_view(), name="signup"),
+    path('logout/', Logout.as_view(), name='logout'),
 ]
 
 if settings.DEBUG:
