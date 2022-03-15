@@ -15,20 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.contrib.staticfiles.urls import static
-from base.views import UserDetail, UserList, UserUpdate, Login, Top, Signup, Logout
+from base.views.user_views import SignupView
 
 urlpatterns = [
-    path('', Top.as_view(), name="top"),
     path('admin/', admin.site.urls),
-    path('login/', Login.as_view(), name="login"),
-    path('user/<str:pk>/update/', UserUpdate.as_view(), name="user_update"),
-    path('user/<str:pk>/', UserDetail.as_view(), name="user_detail"),
-    path('users/', UserList.as_view()),
-    path('signup/', Signup.as_view(), name="signup"),
-    path('logout/', Logout.as_view(), name='logout'),
+    path("__reload__", include("django_browser_reload.urls")),
+    path("signup/", SignupView.as_view())
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

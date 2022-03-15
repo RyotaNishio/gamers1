@@ -1,12 +1,17 @@
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, UpdateView
+from django.contrib.auth.forms import UserChangeForm
+from django.urls import reverse_lazy
 from base.models import User
 
 
-class UserView(DetailView):
+class UserDetail(DetailView):
     model = User
-    template_name = "pages/user.html"
+    template_name = "pages/user_detail.html"
 
 
-class UserListView(ListView):
+class UserList(ListView):
     model = User
     template_name = 'pages/user_list.html'
+
+
+
