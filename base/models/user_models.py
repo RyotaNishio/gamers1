@@ -52,7 +52,9 @@ class User(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     data_joined = models.DateTimeField(auto_now_add=True)
-    img = models.ImageField(blank=True, null=True, upload_to=get_user_image_path)
+    img = models.ImageField(blank=True, null=True, upload_to=get_user_image_path,
+                            default='user/l_e_others_500.png')
+    following = models.ManyToManyField("self", blank=True, related_name="followed_by", symmetrical=False)
 
     objects = UserManager()
 
@@ -74,7 +76,6 @@ class Profile(models.Model):
     user_id = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     bio = models.TextField(default='', blank=True, max_length=150)
     birthday = models.DateField(blank=True, null=True)
-    # img = models.ImageField(blank=True, null=True, upload_to=get_image_path)
 
 
 @receiver(post_save, sender=User)

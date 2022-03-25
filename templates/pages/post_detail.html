@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="col-span-3 p-3 rounded-lg bg-cyan-300 mt-5 mx-32 h-min">
+    {% include 'snippets/post_card.html' with post=object %}
+    {% if post.comment_set.count %}
+    <div class="grid grid-cols-5">
+        {% for comment in post.comment_set.all %}
+        <div class="col-span-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mt-8 h-8 w-8 text-gray-600 origin-center rotate-180" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+            </svg>
+        </div>
+        <div class="col-span-4 col-start-2 mt-3 ">
+            {% include 'snippets/comment_card.html' with comment=comment %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

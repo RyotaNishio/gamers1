@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{% for post in object_list %}
+    <div class="my-5 mx-32">
+        {% include 'snippets/post_card.html' with post=post %}
+    </div>
+{% endfor %}
+{% endblock %}

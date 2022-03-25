@@ -1,3 +1,43 @@
-<div>
-    <h1>UserCard</h1>
+<div class="grid col-span-1 rounded-lg bg-cyan-200 p-4 grid-rows-9 border-2 border-cyan-300">
+    <div class="row-span-6">
+        <img src="{{ user.img.url }}" alt="" class="my-3 mx-auto h-48 w-48 object-cover object-top rounded-full">
+        <p class="font-normal text-3xl text-center">{{ user.username }}</p>
+    </div>
+    <div class="row-span-1 flex mb-2">
+        <p class="mx-auto">following:{{ user.following.count }}</p>
+        <p class="mx-auto">followers:{{ user.followed_by.count }}</p>
+    </div>
+    {% if user.pk == request.user.pk %}
+    <a href="{% url 'user_update' request.user.id %}">
+        <div class="row-span-1 flex mt-2 text-gray-700 rounded-full hover:bg-cyan-500 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 ml-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+            </svg>
+            <p class="my-auto ml-1 text-xl">Edit</p>
+        </div>
+    </a>
+    {% else %}
+    <a href="{% url 'follow' user.pk %}?next={{ request.path }}">
+        <div class="row-span-1 flex mt-2 text-gray-700 rounded-full hover:bg-cyan-500 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 ml-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
+            </svg>
+            {% if user in request.user.following.all %}
+            <p class="my-auto ml-1 text-xl">Unfollow</p>
+            {% else %}
+            <p class="my-auto ml-1 text-xl">Follow</p>
+            {% endif %}
+        </div>
+    </a>
+    {% endif %}
+    <a href="#">
+        <div class="row-span-1 flex mt-2 text-gray-700 rounded-full hover:bg-cyan-500 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 ml-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z"
+                      clip-rule="evenodd"/>
+            </svg>
+            <p class="my-auto ml-1 text-xl">Message</p>
+        </div>
+    </a>
 </div>
