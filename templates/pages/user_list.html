@@ -1,8 +1,41 @@
 {% extends 'base.html' %}
 
 {% block main %}
-{% for user in object_list %}
-    {{ user.username }}
-{% endfor %}
-
+<div class="my-10 mx-16">
+    <div class="p-3 rounded-lg bg-cyan-300 ml-4 h-min">
+        <p class="ml-3 mt-1 text-3xl text-gray-600">{{ list_title }}</p>
+        {% for user in object_list %}
+        <div class="grid grid-cols-6 my-5 mx-4 bg-cyan-200 rounded-full">
+            <div class="col-span-1 my-2 mx-auto flex">
+                {% if user.img %}
+                <a href="{% url 'user_detail' user.id %}">
+                    <img src="{{ user.img.url }}" alt="" class="h-16 w-16 object-cover object-top rounded-full">
+                </a>
+                {% endif %}
+                <p class="mx-5 mt-5 font-mono text-2xl">{{ user.username }}</p>
+            </div>
+            <div class="col-span-4 my-3">
+                <span>{{ user.profile.bio }}</span>
+            </div>
+            <a href="{% url 'follow' user.pk %}?next={{ request.path }}" class="my-auto">
+                <div class="col-span-1 flex text-gray-700 rounded-full hover:bg-cyan-500 cursor-pointer w-min">
+                    {% if not user == request.user %}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 ml-5" viewBox="0 0 20 20"
+                         fill="currentColor">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/>
+                    </svg>
+                    <p class="my-auto ml-1 mr-5 text-xl">
+                        {% if user in request.user.following.all %}
+                        Unfollow
+                        {% else %}
+                        Follow
+                        {% endif %}
+                    </p>
+                    {% endif %}
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="grid grid-cols-4 my-10 mx-16">
+    {% include 'snippets/user_card.html' with user=object %}
+    <div class="col-span-3 p-3 rounded-lg bg-cyan-300 ml-4 h-min">
+        <p class="ml-3 mt-1 text-3xl text-gray-600">Posts</p>
+        {% if object.post_set.count %}
+        {% for post in post_set %}
+        <div class="my-5 mx-4">
+            {% include 'snippets/post_card.html' with post=post %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="my-5 mx-4">
+            <p>No post yet.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

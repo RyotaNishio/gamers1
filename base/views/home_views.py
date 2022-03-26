@@ -1,7 +1,10 @@
-from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
+from ..models import Post
 
 
-class Top(LoginRequiredMixin, TemplateView):
-    template_name = 'pages/top.html'
-    login_url = '/login/'
+class Top(ListView):
+    model = Post
+    template_name = 'pages/post_list.html'
+
+    def get_queryset(self):
+        return super(Top, self).get_queryset().order_by('-created_at')

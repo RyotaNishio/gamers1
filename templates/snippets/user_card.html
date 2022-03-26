@@ -1,11 +1,26 @@
-<div class="grid col-span-1 rounded-lg bg-cyan-200 p-4 grid-rows-9 border-2 border-cyan-300">
+<div class="grid col-span-1 rounded-lg bg-cyan-200 p-4 grid-rows-9 border-2 border-cyan-300 h-min">
     <div class="row-span-6">
         <img src="{{ user.img.url }}" alt="" class="my-3 mx-auto h-48 w-48 object-cover object-top rounded-full">
         <p class="font-normal text-3xl text-center">{{ user.username }}</p>
     </div>
+    {% if birthday %}
+    <div class="row-span-1 mb-2 flex mx-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor"
+             stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"/>
+        </svg>
+        <p class="text-gray-500">{{ birthday }}</p>
+    </div>
+    {% endif %}
     <div class="row-span-1 flex mb-2">
-        <p class="mx-auto">following:{{ user.following.count }}</p>
-        <p class="mx-auto">followers:{{ user.followed_by.count }}</p>
+        <a href="{% url 'following_list' user.pk %}" class="mx-auto">
+            <p>following:{{ user.following.count }}</p>
+        </a>
+        <a href="{% url 'followers_list' user.pk %}" class="mx-auto">
+            <p>followers:{{ user.followed_by.count }}</p>
+        </a>
     </div>
     {% if user.pk == request.user.pk %}
     <a href="{% url 'user_update' request.user.id %}">
@@ -40,4 +55,9 @@
             <p class="my-auto ml-1 text-xl">Message</p>
         </div>
     </a>
+    {% if bio %}
+    <div class="row-span-1 mt-4 bg-cyan-100 rounded-lg p-2 border-2 border-dashed border-cyan-400">
+        {{ bio }}
+    </div>
+    {% endif %}
 </div>

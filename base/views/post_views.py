@@ -1,4 +1,5 @@
 from django.views.generic import CreateView, DetailView, ListView, DeleteView, UpdateView, View
+from django.db.models import Q
 from django import forms
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
@@ -38,7 +39,8 @@ class PostList(ListView):
     template_name = 'pages/post_list.html'
 
     def get_queryset(self):
-        return super().get_queryset().order_by('-created_at')
+        users = self.request.user.following.all()
+        return super().get_queryset().filter(Q(user__in=users) | Q(user=self.request.user)).order_by('-created_at')
 
 
 class PostDelete(DeleteView):

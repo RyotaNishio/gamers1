@@ -73,7 +73,7 @@ class User(AbstractBaseUser):
 
 
 class Profile(models.Model):
-    user_id = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     bio = models.TextField(default='', blank=True, max_length=150)
     birthday = models.DateField(blank=True, null=True)
 

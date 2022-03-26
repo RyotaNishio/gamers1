@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block main %}
+{% for news in object_list %}
+<div class="my-5 mx-32">
+    <div class="bg-cyan-200 rounded-lg px-2 py-2">
+        <div class="my-2 mx-7">
+            <a href="{{ news.link }}">
+                <p class="text-xl my-2 hover:text-indigo-700">{{ news.title }}</p>
+            </a>
+        </div>
+        <div class="px-16">
+            <span class="text-gray-800">
+                {{ news.body }}
+            </span>
+        </div>
+
+    </div>
+    <div class="col-span-1 my-2 justify-items-center">
+        {% if post.img %}
+        <img src="{{ post.img.url }}" alt="" class="h-32 w-32 object-cover object-top rounded-lg mx-auto">
+        {% endif %}
+    </div>
+</div>
+
+
+</div>
+{% endfor %}
+{% endblock %}

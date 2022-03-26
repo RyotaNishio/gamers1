@@ -18,7 +18,7 @@ class CommentForm(forms.ModelForm):
 
 class CommentCreate(CreateView):
     model = Comment
-    template_name = 'pages/comment_form.html'
+    template_name = 'pages/comment_formcomment_form.html'
     form_class = CommentForm
 
     def form_valid(self, form):
